@@ -1,1 +1,15 @@
 Explain the code execution based on the order of the messages logged in src/quiz/promise-2darray.txt.
+
+just because we are doing a new promise it doesnt mean that the code inside is also running asyncronously
+console logs are done synchronously as they are outside of the promise
+the promises run in different threads and do not print "in order", ex why they are interchanged in order
+ -- any promise executes outside of the main thread
+
+Sum called ... 
+returning from sum
+Sum called ...    
+rejecting ...     
+returning from sum
+BAD INPUT: Expected array as input
+resolving ...
+45
