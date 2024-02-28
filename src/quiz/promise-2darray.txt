@@ -1,15 +1,32 @@
 Explain the code execution based on the order of the messages logged in src/quiz/promise-2darray.txt.
+ 
+The code execution of messages logged in src/quiz/promise-2darray.txt was as follows:
+    Sum called ... 
+    returning from sum
+    Sum called ...    
+    rejecting ...     
+    returning from sum
+    BAD INPUT: Expected array as input
+    resolving ...
+    45
 
-just because we are doing a new promise it doesnt mean that the code inside is also running asyncronously
-console logs are done synchronously as they are outside of the promise
-the promises run in different threads and do not print "in order", ex why they are interchanged in order
- -- any promise executes outside of the main thread
+sumPromise1 calls the sum2DArray function and logs:
+    Sum called ... 
+    returning from sum
+Since a valid array is passed to the function, the setTimeout function is called causing the function to wait until the timer runs out to execute
 
-Sum called ... 
-returning from sum
-Sum called ...    
-rejecting ...     
-returning from sum
-BAD INPUT: Expected array as input
-resolving ...
-45
+sumPromise2 calls the sum2DArray function and logs:
+    Sum called ...    
+    rejecting ...     
+    returning from sum
+A valid array was not passed to the function, causing the promise to be rejected
+
+Since the sumPromise2 was rejected, the .catch promise handler is executed and logs the expected error:
+    BAD INPUT: Expected array as input
+
+The code from the setTimeout function from sumPromise1 executes and resolves the sumPromise1:
+    resolving ...
+
+sumPromise1's .then handler is executed and logs the sum of the array.
+    45
+
