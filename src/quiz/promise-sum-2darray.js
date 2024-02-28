@@ -8,16 +8,34 @@ const array2D = [
 // add the results of each row
 function sumOfARow(arr, rowIdx) {
     return new Promise((resolve, reject) => {
-        
+        if(arr.length > rowIdx) {
+          setTimeout(() => {
+            let sum = 0;
+            for (let i = 0; i < arr[rowIdx].length; i++) {
+              sum += arr[rowIdx][i];
+            }
+            resolve(sum);
+          }, 0)
+        } else {
+          reject(`Row Index ${rowIdx} must be within 0 and ${arr.length}`)
+        }
     })
 }
 
-// use promise.all to resolve the list of all promises
-Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
-.then((responses) => {
-  for (const response of responses) {
+rowSumPromises = [];
 
-  }
+for(let x = 0; x < array2D.length; x++) {
+  rowSumPromises.push(sumOfARow(array2D, x));
+}
+
+// use promise.all to resolve the list of all promises
+Promise.all(rowSumPromises)
+.then((rowSums) => {
+  let sum = 0;
+  rowSums.forEach(rowSum => {
+    sum += rowSum;
+  })
+  console.log(`Sum = ${sum}`)
 })
-.catch((error) => console.log(`Error Msh: ${error}`))
+.catch((error) => console.log(`Error Msg: ${error}`))
 
